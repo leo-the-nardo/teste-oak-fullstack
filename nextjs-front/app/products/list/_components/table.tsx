@@ -41,6 +41,7 @@ import {
 } from "@/components/ui/table"
 import { ProductRow } from "@/app/products/models"
 import AddProductButton from "@/app/products/_components/add-product-button"
+import { DataTablePagination } from "@/app/products/list/_components/pagination"
 
 const data: ProductRow[] = [
   {
@@ -61,7 +62,57 @@ const data: ProductRow[] = [
   {
     id: "5kma53ae",
     price: 874,
+    name: "Silaaaas22",
+  },
+  {
+    id: "bhqecj4p",
+    price: 721,
+    name: "carmella",
+  },
+  {
+    id: "m5gr84i9",
+    price: 316,
+    name: "ken99",
+  },
+  {
+    id: "3u1reuv4",
+    price: 242,
+    name: "Abe45",
+  },
+  {
+    id: "derv1ws0",
+    price: 837,
+    name: "Monserrat44",
+  },
+  {
+    id: "5kma53ae",
+    price: 874,
     name: "Silas22",
+  },
+  {
+    id: "bhqecj4p",
+    price: 721,
+    name: "carmellaa",
+  },
+  {
+    id: "m5gr84i9",
+    price: 316,
+    name: "ken99",
+  },
+  {
+    id: "3u1reuv4",
+    price: 242,
+    name: "Abe45",
+  },
+  {
+    id: "derv1ws0",
+    price: 837,
+    name: "Monserrat44",
+  },
+  {
+    id: "5kma53ae",
+    price: 874,
+    name: "Silas22aaa",
   },
   {
     id: "bhqecj4p",
@@ -185,6 +236,11 @@ export function DataTableDemo() {
       columnVisibility,
       rowSelection,
     },
+    initialState: {
+      pagination: {
+        pageSize: 7,
+      },
+    },
   })
 
   return (
@@ -251,30 +307,11 @@ export function DataTableDemo() {
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
+      {/*<div className="flex items-center justify-end space-x-2 py-4">*/}
+      <div className="space-x-2 py-4">
+        <DataTablePagination table={table} />
       </div>
+      {/*</div>*/}
       <AddProductButton className="sm:hidden" />
     </div>
   )

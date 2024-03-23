@@ -1,0 +1,12 @@
+GET http://localhost:8080/products?page=0&dir=asc
+
+###
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Product 1",
+  "description": "Product 1 description",
+  "price": 100.0,
+  "availableToSell": "yes"
+}

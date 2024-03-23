@@ -2,9 +2,9 @@ package com.leothenardo.oak.dtos;
 
 import com.leothenardo.oak.entities.Product;
 
-public record ProductDTO(String id, String name, String description, Float price) {
+public record ProductDTO(String id, String name, String description, Float price, boolean availableToSell) {
 
 	static public ProductDTO from(Product product) {
-		return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice());
+		return new ProductDTO(product.getId(), product.getName(), product.getDescription(), product.getPrice(), product.isAvailableToSell());
 	}
 }

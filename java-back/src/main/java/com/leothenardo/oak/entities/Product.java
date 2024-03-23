@@ -45,7 +45,7 @@ public class Product {
 		if (name == null || name.isBlank()) {
 			validationErrors.add("Name is required");
 		}
-		if (price <= 0) {
+		if (price == null || price <= 0) {
 			validationErrors.add("Price must be greater than 0");
 		}
 		if (!validationErrors.isEmpty()) {

@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  java-homebroker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Example port mapping
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_USERNAME=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=product
+  db:
+    image: postgres:15
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - products-db-data:/var/lib/postgresql/data
+
+volumes:
+  products-db-data:
+    driver: local

@@ -21,8 +21,9 @@ public class ProductService {
 	}
 
 	public Page<ProductDTO> list(Integer page, String orderBy, String direction) {
+		if (page < 0) throw new IllegalArgumentException("Page must be greater than 0");
 		var sort = Sort.by(Sort.Direction.fromString(direction), orderBy);
-		var pageable = PageRequest.of(page, 7, sort);
+		var pageable = PageRequest.of(page, 6, sort);
 		var products = productRepository.findAll(pageable);
 		return products.map(ProductDTO::from);
 	}

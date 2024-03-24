@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useState } from "react"
-import { ProductForm } from "@/app/products/_components/product-form"
+import { ProductForm } from "@/app/products/_components/form/product-form"
 import { toast } from "sonner"
 
 export interface ButtonProps

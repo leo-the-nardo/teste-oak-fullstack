@@ -6,10 +6,9 @@ import { API_URL } from "@/routes"
 import { useForm } from "react-hook-form"
 import { ProductSchema } from "@/app/products/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useProducts } from "@/app/products/_contexts/product-context"
 import * as z from "zod"
 import { PostProductResponse } from "@/app/products/models"
-import MoneyInput from "@/app/products/_components/money-input"
+import MoneyInput from "@/app/products/_components/form/money-input"
 import { LoadableButton } from "@/components/loadable-button"
 import { Input } from "@/components/ui/input"
 import {
@@ -23,15 +22,15 @@ import {
 } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Textarea } from "@/components/ui/textarea"
+import { useQueryClient } from "@tanstack/react-query"
 type OrderFormProps = {
   className?: string
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   onSuccess: () => void
   onFail: () => void
 }
-
 export function ProductForm(props: OrderFormProps) {
-  const { addProduct } = useProducts()
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof ProductSchema>>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
@@ -43,7 +42,6 @@ export function ProductForm(props: OrderFormProps) {
   })
   const [isPending, startTransition] = useTransition()
   async function onSubmit(data: z.infer<typeof ProductSchema>) {
-    console.log("ProductForm , onSubmit data:", data)
     const validatedFields = ProductSchema.safeParse(data)
     if (!validatedFields.success) {
       return
@@ -53,38 +51,25 @@ export function ProductForm(props: OrderFormProps) {
         price: data.price,
         name: data.name,
       })
-      // const res = await fetch(`${API_URL}/products`, {
-      //   method: "POST",
-      //   body: body,
-      //   cache: "no-store",
-      // })
-      // if (res.status !== 200) {
-      //   toast.error(
-      //     "Não foi possível adicionar o produto, tente novamente mais tarde",
-      //   )
-      //   return
-      // }
-      // const resBody = await res.json()
-      const resBody = {
-        id: String(Math.random()),
-        name: data.name,
-        price: data.price,
-        description: data.description,
-        availableToSell: data.available === "yes",
-      }
-      addProduct({
-        id: resBody.id,
-        name: resBody.name,
-        price: resBody.price,
-        description: resBody.description ?? "",
-        availableToSell: resBody.availableToSell,
+      const res = await fetch(`${API_URL}/products`, {
+        method: "POST",
+        body: body,
+        cache: "no-store",
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
       })
+      if (res.status !== 200) {
+        props.onFail()
+        return
+      }
+      await queryClient.invalidateQueries()
       props.onSuccess()
     })
   }
 
   return (
-    <div>
+    <div className={props.className}>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

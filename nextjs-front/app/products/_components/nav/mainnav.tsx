@@ -11,8 +11,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MobileNav } from "@/app/products/_components/mobile-nav"
-import { MainNavItem } from "@/app/products/_components/nav"
+import { MobileNav } from "@/app/products/_components/nav/mobile-nav"
+import { MainNavItem } from "@/app/products/_components/nav/nav"
 
 interface MainNavProps {
   items?: MainNavItem[]

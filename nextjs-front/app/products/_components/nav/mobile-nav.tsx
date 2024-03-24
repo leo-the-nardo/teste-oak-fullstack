@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 
 import { Icons } from "@/components/icons"
 import { useSelectedLayoutSegment } from "next/navigation"
-import { MainNavItem } from "@/app/products/_components/nav"
+import { MainNavItem } from "@/app/products/_components/nav/nav"
 
 interface MobileNavProps {
   items: MainNavItem[]

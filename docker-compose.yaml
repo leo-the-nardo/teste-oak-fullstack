@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  java-api:
+    build:
+      context: ./java-back
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Example port mapping
+    environment:
+      - POSTGRES_HOST=db-product
+      - POSTGRES_USERNAME=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=product
+    restart: always
+  nextjs-front:
+    build:
+      context: ./nextjs-front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://localhost:8080
+    restart: always
+  db-product:
+    image: postgres:15
+    container_name: db-product
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - products-db-data:/var/lib/postgresql/data
+    restart: always
+
+
+volumes:
+  products-db-data:
+    driver: local

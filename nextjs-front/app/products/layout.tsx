@@ -1,8 +1,8 @@
 "use server"
 import React from "react"
-import { ProductContextProvider } from "@/app/products/_contexts/product-context"
-import { MainNav } from "@/app/products/_components/mainnav"
+import { MainNav } from "@/app/products/_components/nav/mainnav"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import ReactQueryProvider from "@/app/products/_contexts/react-query-provider"
 const config = {
   mainNav: [
     {
@@ -11,7 +11,7 @@ const config = {
     },
     {
       title: "Listar",
-      href: "/products/list",
+      href: "/products",
     },
   ],
 }
@@ -27,7 +27,7 @@ export default async function SessionLayout({
 }>) {
   return (
     <div className="grid h-full min-h-screen grid-cols-1 grid-rows-[auto_1fr] lg:grid-cols-[auto_1fr]">
-      <ProductContextProvider>
+      <ReactQueryProvider>
         <header className=" z-50 col-span-full flex h-[54px] items-center border border-transparent bg-background/20 px-4 shadow md:h-[72px] lg:h-[64px]  lg:px-12">
           <MainNav items={config.mainNav} />
           <nav className="ml-auto flex items-center">
@@ -52,7 +52,7 @@ export default async function SessionLayout({
             {children}
           </div>
         </div>
-      </ProductContextProvider>
+      </ReactQueryProvider>
     </div>
   )
 }

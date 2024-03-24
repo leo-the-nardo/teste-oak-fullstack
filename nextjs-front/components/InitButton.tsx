@@ -10,7 +10,7 @@ interface LoginButtonProps {
 export function InitButton({ children }: LoginButtonProps) {
   const router = useRouter()
   const onClick = () => {
-    router.push("/products/list")
+    router.push("/products")
   }
   return (
     <span onClick={onClick} className="cursor-pointer">
